@@ -12,7 +12,7 @@ const Home = () => {
   const { userData } = useSelector((state) => state.auth)
 
   return (
-    <div className='bg-gray-100 overflow-y-hidden h-screen flex flex-col'>
+    <div className='bg-gray-100 h-screen flex flex-col'>
       <nav className='w-full border-b py-1 md:py-2'>
         <div className='py-0 container mx-auto px-6 flex items-center justify-between'>
           <div aria-label='Home. logo' role='img'>
