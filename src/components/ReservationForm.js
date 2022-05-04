@@ -10,8 +10,8 @@ const ReservationForm = () => {
   const [email, setEmail] = useState('')
 
   return (
-    <div className='w-full flex justify-center'>
-      <div className='w-1/2'>
+    <div className='w-full flex justify-center px-4'>
+      <div className='w-full md:w-1/2'>
         <form>
           <div className='mb-2'>
             <label
