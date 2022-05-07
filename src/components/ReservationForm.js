@@ -1,6 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  checkAvailability,
+  reset,
+  temporaryReservation,
+} from '../features/reservation/reservationSlice'
 import DatePicker from 'react-datepicker'
 import PhoneInput from 'react-phone-number-input'
+import { Oval } from 'react-loader-spinner'
 
 const ReservationForm = () => {
   const [name, setName] = useState('')
@@ -9,10 +16,42 @@ const ReservationForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('')
   const [email, setEmail] = useState('')
 
+  const dispatch = useDispatch()
+  const { isLoading, isError, message, isSuccess } = useSelector(
+    (state) => state.reservation
+  )
+  const { userData } = useSelector((state) => state.auth)
+
+  const checkAvailable = async (e) => {
+    e.preventDefault()
+
+    const temporaryReservationData = {
+      userId: userData.user.userId,
+      name,
+      email,
+      checkIn: startDate,
+      checkOut: endDate,
+      phoneNo: phoneNumber,
+    }
+
+    const availabilityData = {
+      userId: userData.user.userId,
+      checkIn: startDate,
+      checkOut: endDate,
+    }
+
+    dispatch(checkAvailability(availabilityData))
+    dispatch(temporaryReservation(temporaryReservationData))
+  }
+
+  useEffect(() => {
+    dispatch(reset())
+  }, [dispatch, isError, message, isSuccess])
+
   return (
     <div className='w-full flex justify-center px-4'>
       <div className='w-full md:w-1/2'>
-        <form>
+        <form onSubmit={checkAvailable}>
           <div className='mb-2'>
             <label
               htmlFor='name'
@@ -95,9 +134,19 @@ const ReservationForm = () => {
 
           <button
             type='submit'
-            className='text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center'
+            className='text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center flex items-center justify-center'
           >
-            Check Availability
+            {!isLoading ? (
+              'Check Availability'
+            ) : (
+              <Oval
+                ariaLabel='loading-indicator'
+                height={28}
+                width={28}
+                strokeWidth={5}
+                color='white'
+              />
+            )}
           </button>
         </form>
       </div>

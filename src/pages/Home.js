@@ -5,6 +5,7 @@ import { logout } from '../features/auth/authSlice'
 import Traveler from '../components/Traveler'
 import HotelAdmin from '../components/HotelAdmin'
 import SystemAdmin from '../components/SystemAdmin'
+import ReservationsSidebar from '../components/ReservationsSidebar'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -41,17 +42,30 @@ const Home = () => {
               </>
             )}
             {userData && (
-              <button
-                className='focus:outline-none lg:text-lg lg:font-medium focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-indigo-700 hover:bg-indigo-800 rounded border border-indigo-700 text-white text-sm px-4 py-1'
-                onClick={() => dispatch(logout())}
-              >
-                Sign Out
-              </button>
+              <>
+                {userData.user.role === 'traveler' && (
+                  <button
+                    className='lg:text-lg lg:font-medium focus:shadow-lg  focus:outline-none focus:ring-0 focus:ring-indigo-700 bg-indigo-700 hover:bg-indigo-800 rounded border border-indigo-700 text-white text-sm px-4 py-1 mr-2 transition duration-150 ease-in-out'
+                    data-bs-toggle='offcanvas'
+                    data-bs-target='#offcanvasRight'
+                    aria-controls='offcanvasRight'
+                  >
+                    View my reservation
+                  </button>
+                )}
+                <button
+                  className='focus:outline-none lg:text-lg lg:font-medium focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-indigo-700 hover:bg-indigo-800 rounded border border-indigo-700 text-white text-sm px-4 py-1'
+                  onClick={() => dispatch(logout())}
+                >
+                  Sign Out
+                </button>
+              </>
             )}
           </div>
         </div>
       </nav>
       <main className='bg-red-100 h-full py-6 overflow-y-auto relative'>
+        <ReservationsSidebar />
         {!userData && (
           <div className='flex items-center justify-center h-full'>
             <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-gray-800 font-black leading-7 md:leading-10'>
