@@ -10,6 +10,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: '',
+  addUser: false,
 }
 
 // Register user
@@ -35,6 +36,19 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   }
 })
 
+// Add New User - System Admin
+export const addNewuser = createAsyncThunk(
+  'auth/addNewuser',
+  async (user, thunkAPI) => {
+    try {
+      return await authService.addNewUser(user)
+    } catch (error) {
+      const message = error.response.data.msg || error.message
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout()
 })
@@ -48,6 +62,7 @@ export const authSlice = createSlice({
       state.isSuccess = false
       state.isError = false
       state.message = ''
+      state.addUser = false
     },
   },
   extraReducers: (builder) => {
@@ -79,6 +94,20 @@ export const authSlice = createSlice({
         state.isError = true
         state.message = action.payload
         state.userData = null
+      })
+      .addCase(addNewuser.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addNewuser.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.addUser = true
+      })
+      .addCase(addNewuser.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.addUser = false
+        state.message = action.payload
       })
       .addCase(logout.fulfilled, (state) => {
         state.userData = null

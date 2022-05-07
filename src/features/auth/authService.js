@@ -29,10 +29,17 @@ const logout = () => {
   localStorage.removeItem('user')
 }
 
+// add new user -system admin
+const addNewUser = async (userData) => {
+  const response = await axios.post(API_URL + 'register', userData)
+  return response.data
+}
+
 const authService = {
   register,
   logout,
   login,
+  addNewUser,
 }
 
 export default authService
