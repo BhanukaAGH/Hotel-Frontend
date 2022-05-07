@@ -12,8 +12,8 @@ const Home = () => {
   const { userData } = useSelector((state) => state.auth)
 
   return (
-    <div className='bg-gray-100 h-screen flex flex-col'>
-      <nav className='w-full border-b py-1 md:py-2'>
+    <div className='bg-gray-100 h-screen overflow-hidden flex flex-col'>
+      <nav className='w-full border-b py-1 md:py-2 sticky top-0 bg-gray-100 z-10'>
         <div className='py-0 container mx-auto px-6 flex items-center justify-between'>
           <div aria-label='Home. logo' role='img'>
             <img
@@ -51,7 +51,7 @@ const Home = () => {
           </div>
         </div>
       </nav>
-      <main className='bg-red-100 h-full'>
+      <main className='bg-red-100 h-full py-6 overflow-y-auto'>
         {!userData && (
           <div className='flex items-center justify-center h-full'>
             <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-gray-800 font-black leading-7 md:leading-10'>
