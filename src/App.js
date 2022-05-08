@@ -16,7 +16,7 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/payment' element={<Payment />} />
-        <Route path='/location' element={<Location />} />
+        <Route path='/location/:lng/:lat' element={<Location />} />
       </Routes>
       <ToastContainer position='bottom-right' autoClose={3000} />
     </>

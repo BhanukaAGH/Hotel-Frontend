@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
+import { useSelector } from 'react-redux'
 import CheckoutForm from '../components/CheckoutForm'
+import axios from 'axios'
 
 const stripePromise = loadStripe(
   'pk_test_51JUCpmH2JSYXOELancysVC7n2LcttRWJkh6sgpMA19ukxzGWyj61Nw5A7OwoGcQfMITgFvWxhs3ZAxo3YWIO6mGi00gmCSw097'
@@ -10,14 +12,19 @@ const stripePromise = loadStripe(
 const Payment = () => {
   const [clientSecret, setClientSecret] = useState('')
 
+  const { reservation } = useSelector((state) => state.reservation)
+
+  const getClientSecret = async () => {
+    const response = await axios.post(
+      'https://stripepayment-hotelapi.herokuapp.com/create-payment-intent',
+      reservation
+    )
+
+    setClientSecret(response.data.clientSecret)
+  }
+
   useEffect(() => {
-    fetch('http://localhost:8001/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: [{ id: 'xl-tshirt' }] }),
-    })
-      .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret))
+    getClientSecret()
   }, [])
 
   const appearance = {

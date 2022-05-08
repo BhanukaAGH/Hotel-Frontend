@@ -102,14 +102,12 @@ export const reservationSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getAllReservations.fulfilled, (state, action) => {
-        state.isSuccess = true
         state.isLoading = false
         state.reservations = action.payload
         state.isError = false
         state.message = ''
       })
       .addCase(getAllReservations.rejected, (state, action) => {
-        state.isSuccess = false
         state.isLoading = false
         state.reservations = null
         state.isError = true
@@ -128,7 +126,6 @@ export const reservationSlice = createSlice({
       .addCase(cancelReservation.rejected, (state, action) => {
         state.isSuccess = false
         state.isLoading = false
-        state.reservation = null
         state.isError = true
         state.message = action.payload
       })

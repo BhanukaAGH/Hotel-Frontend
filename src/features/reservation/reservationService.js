@@ -15,6 +15,7 @@ const getAllReservations = async (userId) => {
 
 const cancelReservation = async (reservationId) => {
   const response = await axios.delete(`${API_URL}/${reservationId}`)
+  toast.success(response.data.msg)
   return response.data
 }
 

@@ -1,51 +1,52 @@
 import React from 'react'
-import {
-  GoogleMap,
-  useJsApiLoader,
-  Marker,
-  InfoWindow,
-} from '@react-google-maps/api'
+import { useParams } from 'react-router-dom'
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
+import Spinner from '../components/Spinner'
 
 const containerStyle = {
   height: '100vh',
 }
 
-const center = {
-  lat: 6.927079,
-  lng: 79.861244,
+var center = {
+  lat: 7.873054,
+  lng: 80.771797,
 }
 
 const Location = () => {
+  const { lat, lng } = useParams()
+
+  let position = {
+    lat: parseFloat(lat),
+    lng: parseFloat(lng),
+  }
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyDTC1NQNzUUD2KvSTLJxKO0tZ9jBnhJ9kg',
   })
 
-  const [map, setMap] = React.useState(null)
-
   const onLoad = React.useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(center)
     map.fitBounds(bounds)
-    setMap(map)
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
   }, [])
 
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
+      mapTypeId='hybrid'
       center={center}
-      zoom={10}
+      zoom={5}
       onLoad={onLoad}
-      onUnmount={onUnmount}
     >
-      {/* Child components, such as markers, info windows, etc. */}
-      <></>
+      <Marker
+        onLoad={() => {
+          center = position
+        }}
+        position={position}
+      />
     </GoogleMap>
   ) : (
-    <></>
+    <Spinner />
   )
 }
 

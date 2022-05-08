@@ -1,10 +1,48 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { makeReservation } from '../features/reservation/reservationSlice'
 import ReservationForm from './ReservationForm'
 import RoomsTable from './RoomsTable'
+import { createEmailMessage } from '../utils/emailMessage'
+import { createSMSMessage } from '../utils/smsMessage'
 
 const Traveler = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const { availability } = useSelector((state) => state.reservation)
+  const urlParams = new URLSearchParams(window.location.search)
+  var status = urlParams.get('redirect_status')
+
+  useEffect(() => {
+    const reservationData = JSON.parse(localStorage.getItem('reservation'))
+    if (reservationData) {
+      const message = createEmailMessage(reservationData)
+      const emailData = {
+        to: reservationData.email,
+        subject: 'Reservation Information',
+        message,
+      }
+      const sms = createSMSMessage(reservationData)
+      const smsData = {
+        phoneNumber: reservationData.phoneNo,
+        message: sms,
+      }
+      dispatch(makeReservation(reservationData))
+      axios.post(
+        'https://sendemail-hotelapi.herokuapp.com/send-email',
+        emailData
+      )
+      axios.post('https://sendsms-hotelapi.herokuapp.com/send-sms', smsData)
+      toast.success('Payment succeeded!')
+      toast.success('Success! Your reservation.')
+      localStorage.setItem('reservation', null)
+      navigate('/', { replace: true })
+    }
+  }, [status])
 
   return (
     <div className='w-full'>

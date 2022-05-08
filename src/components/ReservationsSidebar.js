@@ -3,22 +3,27 @@ import { MdClose } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getAllReservations,
+  cancelReservation,
   reset,
 } from '../features/reservation/reservationSlice'
 
-const ReservationsSidebar = () => {
+const ReservationsSidebar = ({ open }) => {
   const dispatch = useDispatch()
-  const { reservations } = useSelector((state) => state.reservation)
+  const { reservations, isSuccess } = useSelector((state) => state.reservation)
+
+  const canceled = (reservationId) => {
+    dispatch(cancelReservation(reservationId))
+  }
 
   useEffect(() => {
     dispatch(getAllReservations())
     dispatch(reset())
-  }, [dispatch])
+  }, [dispatch, isSuccess, open])
 
   return (
     <div
       className='offcanvas offcanvas-end fixed bottom-0 flex flex-col max-w-full bg-gray-800 invisible bg-clip-padding shadow-sm outline-none transition duration-300 ease-in-out text-gray-700 top-0 right-0 border-none w-96'
-      tabindex='-1'
+      tabIndex='-1'
       id='offcanvasRight'
       aria-labelledby='offcanvasRightLabel'
     >
@@ -50,7 +55,10 @@ const ReservationsSidebar = () => {
                   <p className='text-sm truncate text-gray-200'>{`Check In - ${reservation.checkIn}`}</p>
                   <p className='text-sm truncate text-gray-200'>{`Check Out - ${reservation.checkOut}`}</p>
                 </div>
-                <button className='inline-flex items-center text-base font-semibold text-white'>
+                <button
+                  className='inline-flex items-center text-lg font-semibold text-white hover:text-black'
+                  onClick={() => canceled(reservation._id)}
+                >
                   cancel
                 </button>
               </div>
