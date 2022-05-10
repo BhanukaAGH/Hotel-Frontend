@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:8000/api/v1/user'
+const API_URL = 'http://192.168.56.1:8280/users'
 
 const getAllUsers = async (token) => {
   const config = {

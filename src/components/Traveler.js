@@ -32,11 +32,8 @@ const Traveler = () => {
         message: sms,
       }
       dispatch(makeReservation(reservationData))
-      axios.post(
-        'https://sendemail-hotelapi.herokuapp.com/send-email',
-        emailData
-      )
-      axios.post('https://sendsms-hotelapi.herokuapp.com/send-sms', smsData)
+      axios.post('http://192.168.56.1:8280/send-email', emailData)
+      axios.post('http://192.168.56.1:8280/send-sms', smsData)
       toast.success('Payment succeeded!')
       toast.success('Success! Your reservation.')
       localStorage.setItem('reservation', null)

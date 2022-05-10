@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-const API_URL = 'http://localhost:8004/api/reservation'
+const API_URL = 'http://192.168.56.1:8280/reservation'
 
 const makeReservation = async (reservationData) => {
   const response = await axios.post(`${API_URL}`, reservationData)

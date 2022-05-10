@@ -16,7 +16,7 @@ const Payment = () => {
 
   const getClientSecret = async () => {
     const response = await axios.post(
-      'https://stripepayment-hotelapi.herokuapp.com/create-payment-intent',
+      'http://192.168.56.1:8280/stripe-payment',
       reservation
     )
 

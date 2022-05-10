@@ -22,7 +22,7 @@ const TaxiForm = ({ setBookTaxi }) => {
   const onSubmit = async (e) => {
     e.preventDefault()
     if (hotelname && location && phone && date) {
-      await axios.post('http://localhost:8006/api/taxi', formData)
+      await axios.post('http://192.168.56.1:8280/taxi/book', formData)
       toast.success('Success! Taxi booked.')
       setBookTaxi(false)
     } else {
