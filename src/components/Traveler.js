@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { makeReservation } from '../features/reservation/reservationSlice'
+import {
+  makeReservation,
+  reset,
+} from '../features/reservation/reservationSlice'
 import ReservationForm from './ReservationForm'
 import RoomsTable from './RoomsTable'
 import { createEmailMessage } from '../utils/emailMessage'
@@ -13,18 +16,20 @@ const Traveler = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { availability } = useSelector((state) => state.reservation)
+  const { availability, isError, message } = useSelector(
+    (state) => state.reservation
+  )
   const urlParams = new URLSearchParams(window.location.search)
   var status = urlParams.get('redirect_status')
 
   useEffect(() => {
     const reservationData = JSON.parse(localStorage.getItem('reservation'))
     if (reservationData) {
-      const message = createEmailMessage(reservationData)
+      const email = createEmailMessage(reservationData)
       const emailData = {
         to: reservationData.email,
         subject: 'Reservation Information',
-        message,
+        email,
       }
       const sms = createSMSMessage(reservationData)
       const smsData = {
@@ -40,6 +45,14 @@ const Traveler = () => {
       navigate('/', { replace: true })
     }
   }, [status])
+
+  useEffect(() => {
+    if (isError && message) {
+      toast.error(message)
+    }
+
+    dispatch(reset)
+  }, [isError, message, dispatch])
 
   return (
     <div className='w-full'>
