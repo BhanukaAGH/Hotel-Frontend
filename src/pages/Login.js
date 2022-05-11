@@ -51,9 +51,9 @@ const Login = () => {
             Login to your account
           </p>
           <div className='mt-6'>
-            <lable className='text-sm font-medium leading-none text-gray-800'>
+            <label className='text-sm font-medium leading-none text-gray-800'>
               Email
-            </lable>
+            </label>
             <input
               type='email'
               className='bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2'
@@ -62,9 +62,9 @@ const Login = () => {
             />
           </div>
           <div className='mt-6  w-full'>
-            <lable className='text-sm font-medium leading-none text-gray-800'>
+            <label className='text-sm font-medium leading-none text-gray-800'>
               Password
-            </lable>
+            </label>
             <input
               type='password'
               className='bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2'

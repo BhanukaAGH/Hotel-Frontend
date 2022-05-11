@@ -69,9 +69,9 @@ const Register = () => {
             Create to your account
           </p>
           <div className='mt-6'>
-            <lable className='text-sm font-medium leading-none text-gray-800'>
+            <label className='text-sm font-medium leading-none text-gray-800'>
               Name
-            </lable>
+            </label>
             <input
               type='text'
               name='name'
@@ -81,9 +81,9 @@ const Register = () => {
             />
           </div>
           <div className='mt-6'>
-            <lable className='text-sm font-medium leading-none text-gray-800'>
+            <label className='text-sm font-medium leading-none text-gray-800'>
               Email
-            </lable>
+            </label>
             <input
               type='email'
               name='email'
@@ -93,9 +93,9 @@ const Register = () => {
             />
           </div>
           <div className='mt-6  w-full'>
-            <lable className='text-sm font-medium leading-none text-gray-800'>
+            <label className='text-sm font-medium leading-none text-gray-800'>
               Password
-            </lable>
+            </label>
             <input
               type='password'
               name='password'
@@ -105,9 +105,9 @@ const Register = () => {
             />
           </div>
           <div className='mt-6  w-full'>
-            <lable className='text-sm font-medium leading-none text-gray-800'>
+            <label className='text-sm font-medium leading-none text-gray-800'>
               Re-Password
-            </lable>
+            </label>
             <input
               type='password'
               name='password2'
