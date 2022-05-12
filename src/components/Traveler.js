@@ -29,7 +29,7 @@ const Traveler = () => {
       const emailData = {
         to: reservationData.email,
         subject: 'Reservation Information',
-        email,
+        message: email,
       }
       const sms = createSMSMessage(reservationData)
       const smsData = {
@@ -37,12 +37,16 @@ const Traveler = () => {
         message: sms,
       }
       dispatch(makeReservation(reservationData))
-      axios.post('http://192.168.56.1:8280/send-email', emailData)
-      axios.post('http://192.168.56.1:8280/send-sms', smsData)
-      toast.success('Payment succeeded!')
-      toast.success('Success! Your reservation.')
-      localStorage.setItem('reservation', null)
-      navigate('/', { replace: true })
+
+      const userNotify = async (emailData, smsData) => {
+        await axios.post('http://192.168.56.1:8280/send-email', emailData)
+        await axios.post('http://192.168.56.1:8280/send-sms', smsData)
+        toast.success('Payment succeeded!')
+        toast.success('Success! Your reservation.')
+        localStorage.setItem('reservation', null)
+        navigate('/', { replace: true })
+      }
+      userNotify(emailData, smsData)
     }
   }, [status])
 
