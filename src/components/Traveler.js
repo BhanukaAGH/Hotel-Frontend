@@ -39,8 +39,8 @@ const Traveler = () => {
       dispatch(makeReservation(reservationData))
 
       const userNotify = async (emailData, smsData) => {
-        await axios.post('http://192.168.56.1:8280/send-email', emailData)
-        await axios.post('http://192.168.56.1:8280/send-sms', smsData)
+        await axios.post('/send-email', emailData)
+        await axios.post('/send-sms', smsData)
         toast.success('Payment succeeded!')
         toast.success('Success! Your reservation.')
         localStorage.setItem('reservation', null)

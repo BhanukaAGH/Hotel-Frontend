@@ -32,7 +32,7 @@ const HotelForm = ({ setCreateHotel }) => {
     if (hotelName && price && roomType) {
       formData.userId = userData.user.userId
 
-      await axios.post('http://192.168.56.1:8280/hotel/create', formData)
+      await axios.post('/hotel/create', formData)
       toast.success('Success! Add new Room.')
       dispatch(addNewRoom())
       setCreateHotel(false)

@@ -15,10 +15,7 @@ const Payment = () => {
   const { reservation } = useSelector((state) => state.reservation)
 
   const getClientSecret = async () => {
-    const response = await axios.post(
-      'http://192.168.56.1:8280/stripe-payment',
-      reservation
-    )
+    const response = await axios.post('/stripe-payment', reservation)
 
     setClientSecret(response.data.clientSecret)
   }

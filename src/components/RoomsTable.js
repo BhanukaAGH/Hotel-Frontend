@@ -6,7 +6,7 @@ const RoomsTable = () => {
   const [hotels, setHotels] = useState(null)
 
   const getAllHotels = async () => {
-    const response = await axios.get('	http://192.168.56.1:8280/hotel/getall')
+    const response = await axios.get('/hotel/getall')
     setHotels(response.data.reservationDetails)
   }
 

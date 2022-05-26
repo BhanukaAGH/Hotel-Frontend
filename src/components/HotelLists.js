@@ -16,9 +16,7 @@ const HotelLists = ({ setUpdateHotel }) => {
   useEffect(() => {
     const getRooms = async () => {
       try {
-        const response = await axios.get(
-          'http://192.168.56.1:8280/hotel/getall'
-        )
+        const response = await axios.get('/hotel/getall')
         setRooms(
           response?.data?.reservationDetails.filter(
             (room) => room.userId === userData.user.userId
@@ -35,7 +33,7 @@ const HotelLists = ({ setUpdateHotel }) => {
 
   const removeRoom = async (hotelId) => {
     try {
-      await axios.delete(`http://192.168.56.1:8280/hotel/${hotelId}`)
+      await axios.delete(`/hotel/${hotelId}`)
       toast('Successfully remove hotel room', { type: 'success' })
       dispatch(addNewRoom())
     } catch (error) {
