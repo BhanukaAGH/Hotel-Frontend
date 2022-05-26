@@ -11,4 +11,8 @@ export const store = configureStore({
     reservation: reservationReducer,
     ui: uiReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })
