@@ -1,63 +1,10 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import axios from 'axios'
-import { toast } from 'react-toastify'
-import {
-  makeReservation,
-  reset,
-} from '../features/reservation/reservationSlice'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import ReservationForm from './ReservationForm'
 import RoomsTable from './RoomsTable'
-import { createEmailMessage } from '../utils/emailMessage'
-import { createSMSMessage } from '../utils/smsMessage'
 
 const Traveler = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
-  const { availability, isError, message } = useSelector(
-    (state) => state.reservation
-  )
-  const urlParams = new URLSearchParams(window.location.search)
-  var status = urlParams.get('redirect_status')
-
-  useEffect(() => {
-    const reservationData = JSON.parse(localStorage.getItem('reservation'))
-    if (reservationData) {
-      const email = createEmailMessage(reservationData)
-      const emailData = {
-        to: reservationData.email,
-        subject: 'Reservation Information',
-        message: email,
-      }
-      const sms = createSMSMessage(reservationData)
-      const smsData = {
-        phoneNumber: reservationData.phoneNo,
-        message: sms,
-      }
-      dispatch(makeReservation(reservationData))
-
-      const userNotify = async (emailData, smsData) => {
-        await axios.post('/send-email', emailData)
-        await axios.post('/send-sms', smsData)
-        toast.success('Payment succeeded!')
-        toast.success('Success! Your reservation.')
-        localStorage.setItem('reservation', null)
-        navigate('/', { replace: true })
-      }
-      userNotify(emailData, smsData)
-    }
-  }, [status])
-
-  useEffect(() => {
-    if (isError && message) {
-      toast.error(message)
-    }
-
-    dispatch(reset)
-  }, [isError, message, dispatch])
-
+  const { availability } = useSelector((state) => state.reservation)
   return (
     <div className='w-full'>
       <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-gray-800 font-black leading-7 md:leading-10'>

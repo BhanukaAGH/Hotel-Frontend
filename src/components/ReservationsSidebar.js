@@ -6,6 +6,7 @@ import {
   cancelReservation,
   reset,
 } from '../features/reservation/reservationSlice'
+import moment from 'moment'
 
 const ReservationsSidebar = ({ open }) => {
   const dispatch = useDispatch()
@@ -52,8 +53,12 @@ const ReservationsSidebar = ({ open }) => {
                   <p className='text-sm font-medium truncate text-white'>
                     {reservation.hotelName}
                   </p>
-                  <p className='text-sm truncate text-gray-200'>{`Check In - ${reservation.checkIn}`}</p>
-                  <p className='text-sm truncate text-gray-200'>{`Check Out - ${reservation.checkOut}`}</p>
+                  <p className='text-sm truncate text-gray-200'>{`Check In - ${moment(
+                    reservation.checkIn
+                  ).format('YYYY/MM/DD')}`}</p>
+                  <p className='text-sm truncate text-gray-200'>{`Check Out - ${moment(
+                    reservation.checkOut
+                  ).format('YYYY/MM/DD')}`}</p>
                 </div>
                 <button
                   className='inline-flex items-center text-lg font-semibold text-white hover:text-black'

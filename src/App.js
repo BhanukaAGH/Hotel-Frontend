@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Payment from './pages/Payment'
 import Register from './pages/Register'
 import Location from './pages/Location'
+import Loading from './pages/Loading'
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/payment' element={<Payment />} />
+        <Route path='/loading' element={<Loading />} />
         <Route path='/location/:lng/:lat' element={<Location />} />
       </Routes>
       <ToastContainer position='bottom-right' autoClose={3000} />
