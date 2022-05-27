@@ -31,10 +31,7 @@ const UpdateHotelForm = ({ updateHotel, setUpdateHotel }) => {
     e.preventDefault()
     if (hotelName && price && roomType) {
       formData.userId = userData.user.userId
-      await axios.patch(
-        `http://192.168.56.1:8280/hotel/${updateHotel._id}`,
-        formData
-      )
+      await axios.patch(`/hotel/${updateHotel._id}`, formData)
       toast.success('Successfully update room details.')
       setUpdateHotel(null)
       dispatch(addNewRoom())
@@ -174,7 +171,7 @@ const UpdateHotelForm = ({ updateHotel, setUpdateHotel }) => {
                   type='submit'
                   className='w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300'
                 >
-                  Book Taxi
+                  Update Hotel Room
                 </button>
               </form>
             </div>
